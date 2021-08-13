@@ -5,14 +5,16 @@
 ```
 sudo mkdir -p /data/oasis/mainnet
 sudo wget https://github.com/oasisprotocol/mainnet-artifacts/releases/download/2021-04-28/genesis.json -O /data/oasis/mainnet/genesis.json
-docker run -it hashfabric/oasiseth:v21.2.8 bash
+docker run -it -v /data/oasis/mainnet:/node -w /node hashfabric/oasiseth:v21.2.8 bash
 ```
 
 Follow the steps creating entity, signing transactions, etc
 
 [Run Validator Docs](https://docs.oasis.dev/general/run-a-node/set-up-your-node/run-validator)
+
 [Deploy OasisEth Docs](https://github.com/second-state/oasis-ssvm-runtime/wiki/Deploy-OasisEth-Paratime-on-Oasis-Mainnet)
-Docker image has `oasis-registry` too if you need it.
+
+Docker image has `oasis-registry` tool if you need it.
 
 When done start validator/runtime node, check `docker-compose.yml` for `oasis-node` args
 ```
@@ -21,7 +23,7 @@ export EXTIP=<your external IP here>
 docker-compose up -d
 ```
 
-EXTIP can be placed into `.env` file, check `.env.example`
+EXTIP can be set in `.env` file, check `.env.example`
 
 ## CheatSheet
 
