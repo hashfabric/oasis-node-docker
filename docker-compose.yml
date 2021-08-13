@@ -1,0 +1,47 @@
+version: '3.9'
+
+services:
+  oasis-mainnet:
+    container_name: oasis-mainnet
+    image: hashfabric/oasis-core-ssvm-evmc:v21.2.8
+    build: 
+      context: .
+      args: 
+        - CORE_VERSION=v21.2.8
+        - SSVMRUNTIME_VERSION=v1.7.0
+        - EVMC_VERSION=evmc6-0.1.1-rc1
+        - WASMEDGE_VERSION=0.6.9
+    restart: unless-stopped
+    security_opt:
+      - apparmor:unconfined
+      - seccomp=unconfined
+    volumes:
+      - /data/oasis/mainnet:/node
+    working_dir: /node/data
+    ports:
+      - "26656:26656" # P2P (TCP)
+      - "127.0.0.1:26657:26657" # RPC (TCP)
+      - "9100:9100"
+      - "9200:9200"
+    command: oasis-node
+      --datadir /node/data
+      --log.level warn 
+      --log.format json 
+      --worker.registration.entity /node/entity/entity.json 
+      --genesis.file /node/genesis.json 
+      --worker.compute.enabled 
+      --runtime.provisioner=unconfined 
+      --runtime.history.tag_indexer.backend bleve 
+      --runtime.supported 000000000000000000000000000000000000000000000000000000000000ff04 
+      --runtime.paths 000000000000000000000000000000000000000000000000000000000000ff04=/usr/local/bin/oasis-ssvm-runtime
+      --consensus.tendermint.p2p.seed E27F6B7A350B4CC2B48A6CBE94B0A02B0DCB0BF3@35.199.49.168:26656 
+      --consensus.tendermint.core.listen_address tcp://0.0.0.0:26656 
+      --consensus.tendermint.core.external_address tcp://${EXTIP}:26656 
+      --consensus.validator
+      --worker.client.port 9100 
+      --worker.client.addresses $EXTIP:9100 
+      --worker.p2p.enabled
+      --worker.p2p.port 9200
+      --worker.p2p.addresses $EXTIP:9200
+      --debug.dont_blame_oasis
+      
