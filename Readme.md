@@ -5,7 +5,7 @@
 ```
 sudo mkdir -p /data/oasis/mainnet
 sudo wget https://github.com/oasisprotocol/mainnet-artifacts/releases/download/2021-04-28/genesis.json -O /data/oasis/mainnet/genesis.json
-docker run -it hashfabric/oasis-core-ssvm-evmc:v21.2.8 bash
+docker run -it hashfabric/oasiseth:v21.2.8 bash
 ```
 
 Follow the steps creating entity, signing transactions, etc

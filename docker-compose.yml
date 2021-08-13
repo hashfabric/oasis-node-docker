@@ -2,8 +2,8 @@ version: '3.9'
 
 services:
   oasis-mainnet:
-    container_name: oasis-mainnet
-    image: hashfabric/oasis-core-ssvm-evmc:v21.2.8
+    container_name: oasiseth
+    image: hashfabric/oasiseth:v21.2.8
     build: 
       context: .
       args: 
