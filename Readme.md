@@ -11,8 +11,10 @@ docker run -it hashfabric/oasis-core-ssvm-evmc:v21.2.8 bash
 Follow the steps creating entity, signing transactions, etc
 
 [Run Validator Docs](https://docs.oasis.dev/general/run-a-node/set-up-your-node/run-validator)
+
 [Deploy OasisEth Docs](https://github.com/second-state/oasis-ssvm-runtime/wiki/Deploy-OasisEth-Paratime-on-Oasis-Mainnet)
-Docker image has `oasis-registry` too if you need it.
+
+Docker image has `oasis-registry` tool if you need it.
 
 When done start validator/runtime node, check `docker-compose.yml` for `oasis-node` args
 ```
@@ -21,7 +23,7 @@ export EXTIP=<your external IP here>
 docker-compose up -d
 ```
 
-EXTIP can be placed into `.env` file, check `.env.example`
+EXTIP can be set in `.env` file, check `.env.example`
 
 ## CheatSheet
 
