@@ -1,7 +1,7 @@
 version: '3.9'
 
 services:
-  oasis-mainnet:
+  oasiseth:
     container_name: oasiseth
     image: hashfabric/oasiseth:v21.2.8
     build: 
@@ -23,25 +23,29 @@ services:
       - "127.0.0.1:26657:26657" # RPC (TCP)
       - "9100:9100"
       - "9200:9200"
+    ulimits:
+      nofile:
+        soft: "102400"
+        hard: "102400"
     command: oasis-node
       --datadir /node/data
-      --log.level warn 
+      --log.level info
       --log.format json 
-      --worker.registration.entity /node/entity/entity.json 
       --genesis.file /node/genesis.json 
-      --worker.compute.enabled 
-      --runtime.provisioner=unconfined 
-      --runtime.history.tag_indexer.backend bleve 
-      --runtime.supported 000000000000000000000000000000000000000000000000000000000000ff04 
-      --runtime.paths 000000000000000000000000000000000000000000000000000000000000ff04=/usr/local/bin/oasis-ssvm-runtime
       --consensus.tendermint.p2p.seed E27F6B7A350B4CC2B48A6CBE94B0A02B0DCB0BF3@35.199.49.168:26656 
       --consensus.tendermint.core.listen_address tcp://0.0.0.0:26656 
       --consensus.tendermint.core.external_address tcp://${EXTIP}:26656 
       --consensus.validator
+      --worker.registration.entity /node/entity/entity.json 
       --worker.client.port 9100 
       --worker.client.addresses $EXTIP:9100 
       --worker.p2p.enabled
       --worker.p2p.port 9200
       --worker.p2p.addresses $EXTIP:9200
-      --debug.dont_blame_oasis
-      
+      --worker.compute.enabled=false
+#      --runtime.provisioner=unconfined 
+#      --runtime.history.tag_indexer.backend bleve 
+#      --runtime.supported 000000000000000000000000000000000000000000000000000000000000ff04 
+#      --runtime.paths 000000000000000000000000000000000000000000000000000000000000ff04=/usr/local/bin/oasis-ssvm-runtime
+#      --debug.dont_blame_oasis
+#      
