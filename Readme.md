@@ -5,22 +5,28 @@
 ```
 sudo mkdir -p /data/oasis/mainnet
 sudo wget https://github.com/oasisprotocol/mainnet-artifacts/releases/download/2021-04-28/genesis.json -O /data/oasis/mainnet/genesis.json
-docker run -it -v /data/oasis/mainnet:/node -w /node hashfabric/oasiseth:v21.2.8 bash
+docker-compose -f mainnet.yml up -d
 ```
+Replace `mainnet` with `testnet` if setting up testnet node.
 
 Follow the steps creating entity, signing transactions, etc
 
 [Run Validator Docs](https://docs.oasis.dev/general/run-a-node/set-up-your-node/run-validator)
 
-[Deploy OasisEth Docs](https://github.com/second-state/oasis-ssvm-runtime/wiki/Deploy-OasisEth-Paratime-on-Oasis-Mainnet)
+Docker image has [metadata-registry-tools](https://github.com/oasisprotocol/metadata-registry-tools) and [runtime-stats+proposal-results](https://github.com/oasisprotocol/tools) build in.
 
-Docker image has `oasis-registry` tool if you need it.
-
-When done start validator/runtime node, check `docker-compose.yml` for `oasis-node` args
 ```
 docker-compose pull
 export EXTIP=<your external IP here>
-docker-compose up -d
+```
+
+Mainnet with Cipher paratime:
+```
+docker-compose -f mainnet.yml up -d
+```
+Testnet with Cipher+Emerald paratimes:
+```
+docker-compose -f testnet.yml up -d
 ```
 
 EXTIP can be set in `.env` file, check `.env.example`
